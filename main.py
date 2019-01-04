@@ -54,7 +54,7 @@ class FetchUrl(Resource):
             return {"response" : "Request made less than an hour ago"}, 400
         result = fetch_url.delay(url)
         url_requests.append(result)
-        return result.id
+        return {"ID": result.id}, 200
 
 class RequestStatus(Resource):
     def get(self, request_id):

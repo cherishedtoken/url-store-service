@@ -29,6 +29,7 @@ def request_is_from_last_hour(req):
     return req.added_at >= one_hour_ago
 
 def get_previous_request(url):
+    # Check if a previous request for a given URL exists in the database.
     return FetchedUrl.query.filter_by(url = url).first()
 
 class FetchUrl(Resource):
@@ -36,7 +37,6 @@ class FetchUrl(Resource):
         args = parser.parse_args()
         url = args['url']
         url = check_for_protocol(url)
-        # Retrieve results from a previous job that used a given URL.
         prev = get_previous_request(url)
         if prev:
             return {"data" : prev.data}, 200

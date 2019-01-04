@@ -28,7 +28,7 @@ def request_is_from_last_hour(req):
     one_hour_ago = datetime.datetime.now() - datetime.timedelta(hours=1)
     return req.added_at >= one_hour_ago
 
-def get_previous_requests(url):
+def get_previous_request(url):
     return FetchedUrl.query.filter_by(url = url).first()
 
 class FetchUrl(Resource):
@@ -37,7 +37,7 @@ class FetchUrl(Resource):
         url = args['url']
         url = check_for_protocol(url)
         # Retrieve results from a previous job that used a given URL.
-        prev = get_previous_requests(url)
+        prev = get_previous_request(url)
         if prev:
             return {"data" : prev.data}, 200
         else:
@@ -49,7 +49,7 @@ class FetchUrl(Resource):
         url = check_for_protocol(url)
         # Only fetch data from this URL if we haven't yet done so within the
         # last hour.
-        previous_request = get_previous_requests(url)
+        previous_request = get_previous_request(url)
         if previous_request and request_is_from_last_hour(previous_request):
             return {"response" : "Request made less than an hour ago"}, 400
         result = fetch_url.delay(url)
@@ -65,7 +65,6 @@ class RequestStatus(Resource):
                 status = req.ready()
                 return_status = "Complete" if True else "Pending"
                 return {"ID" : request_id, "Status" : return_status }, 200
-        
 
 api.add_resource(FetchUrl, '/fetch')
 api.add_resource(RequestStatus, '/fetch/status/<request_id>')

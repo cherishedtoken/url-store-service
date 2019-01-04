@@ -2,7 +2,7 @@
 
 ## Description
 
-This is a small app that provides an API that fetches and stores webpages. If a webpage has been stored within the last hour, a request to re-fetch the same page will fail. The fetching of webpages happens asynchronously after you make a request to the /fetch endpoint, and you can check on the status of the request by using the /fetch/status endpoint.
+This is a small app that provides an API that fetches and stores webpages. If a webpage has been stored within the last hour, a request to re-fetch the same page will fail. The fetching of webpages happens asynchronously after you make a request to the /fetch endpoint, and you can check on the current status of the request by using the /fetch/status endpoint.
 
 
 ## Installation 
@@ -13,7 +13,7 @@ You will need to install Python2, RabbitMQ, and Postgres. Postgres can be instal
 
 Once the requirements have been installed, start Celery with `celery -A task_queue worker --loglevel=info`. You can then finally start the main app with `FLASK_APP=main.py flask run`. 
 
-The API:
+## API Details:
 
 `GET /fetch`
 

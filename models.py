@@ -9,3 +9,6 @@ class FetchedUrl(db.Model):
 
     def __repr__(self):
         return "URL {0} at {1}".format(self.url, self.added_at)
+
+if __name__ == '__main__':
+    db.create_all()

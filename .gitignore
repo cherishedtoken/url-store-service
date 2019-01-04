@@ -1,0 +1,6 @@
+# Ignore Emacs files
+*~
+
+# Ignore various Python stuff
+__pycache__
+venv
